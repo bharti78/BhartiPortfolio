@@ -1,0 +1,19 @@
+@tailwind base;@tailwind components;@tailwind utilities;
+:root{--bg:#090917;--primary:#854ce6;--tp:#f2f3f4;--ts:#b1b2b3}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tp);overflow-x:hidden;margin:0}
+*{transition-timing-function:cubic-bezier(.25,.46,.45,.94)}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:#222a35}::-webkit-scrollbar-thumb{background:#575c66;border-radius:6px}
+.card{background:rgba(17,25,40,.83);border:1px solid rgba(255,255,255,.125);box-shadow:rgba(23,92,230,.15) 0 4px 24px;border-radius:16px;position:relative;overflow:hidden;transition:all .4s}
+.card:hover{transform:translateY(-10px) scale(1.02);border-color:rgba(133,76,230,.5);box-shadow:0 20px 40px rgba(133,76,230,.3),0 0 0 1px rgba(133,76,230,.2)}
+.card::before{content:"";position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(45deg,transparent,rgba(133,76,230,.1),transparent);transform:rotate(45deg);opacity:0;pointer-events:none}
+.card:hover::before{animation:shimmer 1.5s ease-in-out}
+@keyframes shimmer{0%{transform:translate(-100%,-100%) rotate(45deg);opacity:0}50%{opacity:1}100%{transform:translate(100%,100%) rotate(45deg);opacity:0}}
+.grad{background:linear-gradient(225deg,hsl(271,100%,50%),hsl(294,100%,50%))}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:12px;padding:14px 24px;font-weight:600;border:2px solid var(--primary);transition:all .3s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 4px 15px rgba(133,76,230,.4)}
+.chip{border:1px solid rgba(242,243,244,.6);border-radius:12px;padding:8px 14px;font-size:14px;color:rgba(242,243,244,.85);transition:all .3s}
+.chip:hover{border-color:var(--primary);color:var(--primary);transform:scale(1.08)}
+.float{animation:float 4s ease-in-out infinite}@keyframes float{50%{transform:translateY(-16px)}}
+.blink{animation:blink 1.06s infinite}@keyframes blink{50%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.float,.blink,.card::before{animation:none}html{scroll-behavior:auto}}
