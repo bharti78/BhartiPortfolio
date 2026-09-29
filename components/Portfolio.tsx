@@ -240,7 +240,9 @@ function Contact() {
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
-    const d = Object.fromEntries(new FormData(form)) as Record<string, string>;
+   const d = Object.fromEntries(
+  Array.from(new FormData(form).entries())
+) as Record<string, string>;
     const key = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
     if (!key) { // no key configured: fall back to the visitor's email app, pre-filled
       window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(d.subject)}&body=${encodeURIComponent(`${d.message}\n\n— ${d.name} (${d.email})`)}`;
