@@ -5,7 +5,7 @@ import { Github, Linkedin, ExternalLink, X, ArrowLeft, ArrowRight, Package, Layo
 import { projects, type Project } from "@/data/projects";
 
 const GH = "https://github.com/bharti78", LI = "https://www.linkedin.com/in/bhartidhote/";
-const NAV = ["About", "Skills", "Experience", "Projects", "Contact"];
+const NAV = ["About", "Skills", "Experience", "Projects", "Education", "Contact"];
 const ROLES = ["Product Designer", "UI/UX Designer", "Interaction Designer", "Frontend Developer"];
 const ease = [0.25, 0.46, 0.45, 0.94] as const;
 
@@ -117,14 +117,62 @@ function Skills() {
   );
 }
 
+const INDITECH_LOGO = "https://media.licdn.com/dms/image/v2/D4D0BAQEDFqXHKKgdNw/company-logo_200_200/company-logo_200_200/0/1694257912595/inditech_technology_services_private_limited_logo?e=2147483647&v=beta&t=C7vb55wLgkw5hbA-ZhiJ7tCX10lJCN0zyBQkFI49xMk";
+const COINCENT_LOGO = "https://media.licdn.com/dms/image/v2/D560BAQEhSFgYhzTpYA/company-logo_200_200/B56Zd34m36GQAI-/0/1750063017899/coincent_ai_logo?e=2147483647&v=beta&t=fHHRvju7PseCYsTThtlvU-9TK9dPtoPNpcVcKpHIw8Q";
+function Logo({ src, name }: { src: string; name: string }) {
+  const [bad, setBad] = useState(false);
+  return bad ? <span className="flex h-[60px] w-[60px] shrink-0 items-center justify-center rounded-full border-2 border-primary/30 bg-white/5 text-xl font-semibold text-primary">{name[0]}</span>
+    : /* eslint-disable-next-line @next/next/no-img-element */ <img src={src} alt={`${name} logo`} width={60} height={60} referrerPolicy="no-referrer" onError={() => setBad(true)} className="h-[60px] w-[60px] shrink-0 rounded-full border-2 border-primary/30 bg-white/5 object-cover" />;
+}
+type Exp = { img: string; role: string; company: string; date: string; desc: string; skills: string[]; doc?: string };
+const EXPERIENCE: Exp[] = [
+  { img: INDITECH_LOGO, role: "Product Development Intern", company: "Inditech Technology Services Pvt. Ltd.", date: "Apr 2025 - Jan 2026",
+    desc: "Worked at Inditech Technology Services Pvt. Ltd. as a Product Development Intern (Remote). I have developed 3+ real-time healthcare products using Python, Django, and PHP, integrating 20+ secure REST APIs with 99.9% uptime. I collaborate closely with UI/UX, QA, and DevOps teams to deliver scalable, production-ready applications, optimizing backend performance by 30% through efficient Django ORM queries and caching techniques.",
+    skills: ["Python", "Django", "PHP", "MySQL", "REST APIs", "Backend Development", "Frontend Development", "Database Management", "Django ORM", "Caching Optimization", "Performance Optimization", "Collaboration with UI/UX, QA, DevOps", "Scalable Product Development"] },
+  { img: COINCENT_LOGO, role: "AI with Python Intern", company: "Coincent.ai", date: "Apr 2024 - Jun 2024",
+    desc: "Worked at Coincent.ai as an Artificial Intelligence with Python Intern. I architected and fine-tuned a Vision Transformer model for image classification on the Oxford-IIIT Pet dataset, achieving a 15% accuracy improvement. Additionally, I designed and implemented a text classification model using TensorFlow, including data preprocessing, model architecture, training, and evaluation, achieving 92% accuracy on the test data.",
+    skills: ["Python", "Machine Learning", "Deep Learning", "Vision Transformers (ViT)", "Text Classification", "TensorFlow", "Keras", "Data Preprocessing", "Feature Engineering", "Model Evaluation", "Accuracy Optimization"],
+    doc: "https://drive.google.com/file/d/1dl3juW0xY86bM1gNibmZP0mS7ggsvPbF/view?usp=sharing" },
+  { img: "https://miro.medium.com/v2/resize:fit:400/1%2AZfYWXN0zA6TqQQ7wGNJUOg.jpeg", role: "GirlScript Summer of Code 2025 Contributor", company: "GirlScript", date: "Jul 2025 - Present",
+    desc: "Worked as an Open Source Contributor in GirlScript Summer of Code (GSSoC), contributing to real-world projects and collaborating with the developer community.",
+    skills: ["ReactJS", "HTML", "CSS", "JavaScript", "GitHub", "Team work"] },
+];
 function Experience() {
-  const rows = [["Product Development Intern", "Inditech Technology Services Pvt. Ltd.", "Apr 2025 – Jan 2026", "Worked on real application interfaces, built and improved product functionality, worked with APIs and backend systems, debugged production issues, and collaborated around application requirements."], ["AI/ML Intern", "Coincent.ai", "Apr 2024 – Jun 2024", ""]];
   return (
     <Section id="experience" title="Experience" desc="Where I have worked and what I have learned.">
-      <div className="mx-auto max-w-3xl border-l-2 border-primary/40 pl-6">{rows.map(([r, c, d, t]) => (
-        <div key={c} className="relative"><span className="absolute -left-[33px] top-9 h-4 w-4 rounded-full bg-primary" />
-          <div className="card my-4 p-6"><h3 className="text-xl font-semibold">{r}</h3><p className="font-medium text-primary">{c}</p><p className="mb-3 text-sm text-ts">{d}</p>{t && <p className="text-sm leading-relaxed text-ts">{t}</p>}</div></div>))}</div>
+      <div className="mx-auto max-w-3xl border-l-2 border-primary/40 pl-6">{EXPERIENCE.map((e) => (
+        <div key={e.company} className="relative"><span className="absolute -left-[33px] top-9 h-4 w-4 rounded-full bg-primary" />
+          <div className="card my-4 flex gap-4 p-6"><Logo src={e.img} name={e.company} />
+            <div className="min-w-0 flex-1">
+              <h3 className="text-xl font-semibold">{e.role}</h3><p className="font-medium text-primary">{e.company}</p><p className="mb-3 text-sm text-ts">{e.date}</p>
+              <p className="text-sm leading-relaxed text-ts">{e.desc}</p>
+              <h4 className="mb-2 mt-4 text-sm font-semibold">Skills</h4>
+              <div className="flex flex-wrap gap-2">{e.skills.map((k) => <span key={k} className="rounded-lg border border-white/25 px-2.5 py-1 text-xs text-tp/80">{k}</span>)}</div>
+              {e.doc && <a href={e.doc} target="_blank" rel="noreferrer" className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline"><ExternalLink size={14} />View Document</a>}
+            </div></div></div>))}</div>
       <p className="mx-auto mt-10 max-w-3xl text-center text-sm text-ts">LeetCode Knight (1900+) · CodeChef 3★ (1600+) · Flipkart GRiD 8.0 Semifinalist · GHCI Scholar · GirlScript Summer of Code · Amazon Future Engineer Bootcamp · TBO Hackathon Final Round</p>
+    </Section>
+  );
+}
+
+const SCHOOL_LOGO = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRV8XxQXvcdySPq-4dU-s9ooGWWLkNq2j9xuw&s";
+const EDUCATION = [
+  { img: "https://cdn.iiitkota.ac.in/site/iiitkota.png", school: "Indian Institute of Information Technology, Kota", degree: "Bachelor of Technology - BTech, Computer Science and Engineering", date: "Aug 2023 - Sep 2027", grade: "6.55 CGPA",
+    desc: "I am currently pursuing a Bachelor's degree in Electronics and Communication at Indian Institute of Information Technology, Kota. I have completed 4 semesters and have a CGPA of 6.55. I have taken courses in Data Structures, Algorithms, Object-Oriented Programming in C++, Database Management Systems, Operating Systems, among others." },
+  { img: SCHOOL_LOGO, school: "Vijay Jyoti Academy School, Dewas", degree: "State Board(XII), Science", date: "Apr 2021 - Apr 2023", grade: "90.8%", desc: "I completed my class 12 high school education at Vijay Jyoti Academy, Dewas, where I studied Science" },
+  { img: SCHOOL_LOGO, school: "Vijay Jyoti Academy School, Dewas", degree: "State Board(X)", date: "Apr 2008 - Apr 2021", grade: "80%", desc: "I completed my class 10 education at Vijay Jyoti Academy School, Dewas." },
+];
+function Education() {
+  return (
+    <Section id="education" title="Education" desc="My education has been a journey of self-discovery and growth.">
+      <div className="mx-auto max-w-3xl border-l-2 border-primary/40 pl-6">{EDUCATION.map((e) => (
+        <div key={e.date} className="relative"><span className="absolute -left-[33px] top-9 h-4 w-4 rounded-full bg-primary" />
+          <div className="card my-4 flex gap-4 p-6"><Logo src={e.img} name={e.school} />
+            <div className="min-w-0 flex-1">
+              <h3 className="text-xl font-semibold">{e.school}</h3><p className="font-medium text-primary">{e.degree}</p><p className="mb-3 text-sm text-ts">{e.date}</p>
+              <p className="mb-3 text-sm"><span className="font-semibold">Grade:</span> <span className="text-ts">{e.grade}</span></p>
+              <p className="text-sm leading-relaxed text-ts">{e.desc}</p>
+            </div></div></div>))}</div>
     </Section>
   );
 }
@@ -138,7 +186,7 @@ function ProjectCard({ p, i, onOpen }: { p: Project; i: number; onOpen: (i: numb
           <a onClick={(e) => e.stopPropagation()} href={p.repo} target="_blank" rel="noreferrer" aria-label="Source" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/30 bg-white/20 hover:bg-primary"><Github size={16} /></a></div></div>
       <div className="flex flex-1 flex-col gap-3 p-5"><span className="text-xs font-medium uppercase tracking-wider text-primary">{p.category}</span>
         <h3 className="text-xl font-semibold">{p.title}</h3><p className="text-sm leading-relaxed text-ts">{p.tagline}</p>
-        <div className="flex flex-wrap gap-2">{p.focus.slice(0, 3).map((f: string) => <span key={f} className="rounded-full border border-primary/40 px-3 py-1 text-xs text-primary">{f}</span>)}</div>
+        <div className="flex flex-wrap gap-2">{p.focus.slice(0, 3).map((f) => <span key={f} className="rounded-full border border-primary/40 px-3 py-1 text-xs text-primary">{f}</span>)}</div>
         <span className="mt-auto pt-2 text-sm font-medium text-primary">View case study →</span></div>
     </div>
   );
@@ -168,7 +216,7 @@ function Modal({ index, go, close }: { index: number; go: (i: number) => void; c
             <motion.section variants={item} className="mt-8"><h3 className={h}>Key design decisions</h3>
               <ul className="mt-3 grid gap-3 md:grid-cols-2">{p.decisions.map((d, i) => <li key={d.title} className="card !transform-none p-4"><span className="text-sm text-primary">0{i + 1}</span><h4 className="font-semibold">{d.title}</h4><p className="text-sm text-ts">{d.body}</p></li>)}</ul></motion.section>
             <motion.section variants={item} className="mt-8"><h3 className={h}>What I built</h3><p className="mt-2">{p.built}</p></motion.section>
-            <motion.section variants={item} className="mt-6"><h3 className={h}>Design focus</h3><div className="mt-2 flex flex-wrap gap-2">{p.focus.map((t: string) => <span key={t} className="chip !py-1.5 text-sm">{t}</span>)}</div>
+            <motion.section variants={item} className="mt-6"><h3 className={h}>Design focus</h3><div className="mt-2 flex flex-wrap gap-2">{p.focus.map((t) => <span key={t} className="chip !py-1.5 text-sm">{t}</span>)}</div>
               {p.tech.length > 0 && <p className="mt-4 text-xs text-ts/70">Built with {p.tech.join(" · ")}</p>}</motion.section>
             <motion.div variants={item} className="mt-8 flex flex-wrap gap-3"><a href={p.live} target="_blank" rel="noreferrer" className="btn grad text-white">View Live</a><a href={p.repo} target="_blank" rel="noreferrer" className="btn text-primary hover:bg-primary hover:text-white">View Source</a></motion.div>
             <motion.nav variants={item} className="mt-10 flex justify-between border-t border-white/10 pt-6" aria-label="Case studies">
@@ -182,7 +230,7 @@ function Modal({ index, go, close }: { index: number; go: (i: number) => void; c
   );
 }
 
-const EMAIL = "bhartidhote8@gmail.com";
+const EMAIL = "bhartidhote158@gmail.com";
 type Status = "idle" | "loading" | "success" | "error";
 const field = "w-full rounded-xl border border-primary/30 bg-[#151a27] px-4 py-3 text-sm text-tp outline-none placeholder:text-ts/60 focus:border-primary focus:ring-2 focus:ring-primary/20";
 const lbl = "mb-2 block text-xs font-semibold text-tp";
@@ -251,7 +299,7 @@ export default function Portfolio() {
         <Section id="projects" title="Projects" desc="Click a project to open its case study.">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">{projects.map((p, i) => <ProjectCard key={p.id} p={p} i={i} onOpen={setOpen} />)}</div>
         </Section>
-        <Contact />
+        <Education /><Contact />
       </main>
       <footer className="border-t border-white/10 py-8 text-center text-sm text-ts">© 2026 Bharti Dhote</footer>
       <AnimatePresence>{open !== null && <Modal index={open} go={setOpen} close={() => setOpen(null)} />}</AnimatePresence>
